@@ -5,7 +5,6 @@ import {
   TouchableOpacity, // Handles row presses
   Pressable, // Handles row presses
 } from "react-native";
-// import { React } from "react";
 
 export const TouchableOpacityButton = ({ onPress, text }) => {
   return (

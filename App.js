@@ -6,59 +6,62 @@ import {
   View,
   ImageBackground,
   FlatList,
-} from 'react-native';
-import {React, useState} from 'react';
-import {CalcButtons} from './Components/calcbuttons';
-import {NumberButtons} from './Components/NumberButtons';
-import {DbButtons} from './Components/DbButtons';
-import {GetDb, PassData} from './Operations/DbOperations';
+} from "react-native";
+import { React, useState } from "react";
+import { CalcButtons } from "./Components/calcbuttons";
+import { NumberButtons } from "./Components/numberButtons";
+import { DbButtons } from "./Components/DbButtons";
+import { GetDb, PassData } from "./Operations/DbOperations";
 
 //https://towardsdev.com/how-to-build-a-calculator-app-using-react-native-a-step-by-step-tutorial-40ae327fae5f
 
 const App = () => {
-  const [calculation, setCalculation] = useState('');
-  let DbDisplay = [
-    {
-      id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-      answer: 'First Item',
-    },
-    {
-      id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-      answer: 'Second Item',
-    },
-    {
-      id: '58694a0f-3da1-471f-bd96-145571e29d72',
-      answer: 'Third Item',
-    },
-  ];
+  // This state holds the current calculation string
+  const [calculation, setCalculation] = useState("");
+  // let DbDisplay = [
+  //   {
+  //     id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+  //     answer: 'First Item',
+  //   },
+  //   {
+  //     id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
+  //     answer: 'Second Item',
+  //   },
+  //   {
+  //     id: '58694a0f-3da1-471f-bd96-145571e29d72',
+  //     answer: 'Third Item',
+  //   },
+  // ];
 
-  const updateCalculation = value => {
+  // This function updates the calculation based on button presses
+  const updateCalculation = (value) => {
     // alert('updateCalculation' + ' ' + value + ' ' + calculation);
+    // Add the pressed value to the calculation string
     setCalculation(calculation + String(value)); //add the value to the growing string
-    console.log('updateCalculation all', calculation);
+    console.log("updateCalculation all", calculation);
     //if you press = then evaluate the calculation
-    if (value === '=') {
+    if (value === "=") {
       let calc = calculation;
       // eslint-disable-next-line no-new-func
-      let answer = new Function('return ' + calc)();
+      let answer = new Function("return " + calc)();
 
-      setCalculation(calc + '=' + answer);
+      setCalculation(calc + "=" + answer);
     }
-    if (value === 'clear') {
-      setCalculation('');
+    if (value === "clear") {
+      setCalculation("");
     }
-    if (value === 'del') {
+    if (value === "del") {
       const result = calculation.slice(0, -1); //removes the last element from the string
-      console.log('updateCalculation DEL', result);
+      console.log("updateCalculation DEL", result);
       setCalculation(result);
     }
   };
   //Database functions
   //value = the new answer to be added to the database
-  const sqlOperation = value => {
-    console.log('App sqlOperation ', value);
+  const sqlOperation = (value) => {
+    console.log("App sqlOperation ", value);
     // let result = [];
-    if (value === 'Display') {
+    if (value === "Display") {
       PassData(value);
     }
     //console.log('App sqlOperation ', JSON.stringify(res));
@@ -74,8 +77,9 @@ const App = () => {
   return (
     <ImageBackground
       resizeMode="cover"
-      source={require('./Assets/waterdrops.jpg')}
-      style={styles.image}>
+      source={require("./Assets/waterdrops.jpg")}
+      style={styles.image}
+    >
       <View style={styles.container}>
         <SafeAreaView>
           <ScrollView>
@@ -83,7 +87,7 @@ const App = () => {
               <Text style={styles.sectionTitle}>Simple Calculator</Text>
               <View style={styles.calcBox}>
                 <Text style={styles.outputText}>
-                  {calculation || 'Enter a number'}
+                  {calculation || "Enter a number"}
                 </Text>
               </View>
               <CalcButtons updateCalculation={updateCalculation} />
@@ -100,23 +104,23 @@ const App = () => {
 
 const styles = StyleSheet.create({
   liContainer: {
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     flex: 1,
     paddingLeft: 5,
   },
 
   liText: {
-    color: '#333',
+    color: "#333",
     fontSize: 17,
-    fontWeight: '400',
+    fontWeight: "400",
     // marginBottom: -3.5,
     // marginTop: -3.5,
   },
   image: {
     flex: 1,
-    justifyContent: 'center',
-    width: '100%',
-    height: '100%',
+    justifyContent: "center",
+    width: "100%",
+    height: "100%",
   },
 
   container: {
@@ -129,22 +133,22 @@ const styles = StyleSheet.create({
     borderRadius: 40,
     paddingLeft: 20,
     paddingTop: 10,
-    backgroundColor: 'oldlace',
+    backgroundColor: "oldlace",
     marginBottom: 10,
     borderWidth: 1,
   },
   outputText: {
-    fontWeight: 'bold',
-    textAlignVertical: 'center',
-    textAlignment: 'right',
+    fontWeight: "bold",
+    textAlignVertical: "center",
+    textAlignment: "right",
     fontSize: 30,
   },
 
   sectionTitle: {
-    color: 'white',
+    color: "white",
     fontSize: 24,
-    fontWeight: 'bold',
-    textAlignVertical: 'center',
+    fontWeight: "bold",
+    textAlignVertical: "center",
   },
 });
 

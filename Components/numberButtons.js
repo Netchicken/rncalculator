@@ -1,88 +1,53 @@
-import {StyleSheet, View} from 'react-native';
-import React from 'react';
-// import {Row} from './Row';
-import {TouchableOpacityButton} from './AllButtons';
+import React from "react";
+import { StyleSheet, View } from "react-native";
+import { TouchableOpacityButton } from "./AllButtons";
 
-export const NumberButtons = ({updateCalculation}) => {
+// This component renders all the number and function buttons for the calculator
+export const NumberButtons = ({ updateCalculation }) => {
+  // Define the buttons in rows, so we can easily display them in a grid
+  const buttonRows = [
+    ["0", "1", "2"],
+    ["3", "4", "5"],
+    ["6", "7", "8"],
+    ["9", ".", "Del"],
+    ["=", "Clear"],
+  ];
+
   return (
     <View>
-      <View style={styles.rowcontainer}>
-        <TouchableOpacityButton
-          style={styles.button}
-          text="0"
-          onPress={() => updateCalculation('0')}
-        />
-        <TouchableOpacityButton
-          style={styles.button}
-          text="1"
-          onPress={() => updateCalculation('1')}
-        />
-        <TouchableOpacityButton
-          style={styles.button}
-          text="2"
-          onPress={() => updateCalculation('2')}
-        />
-      </View>
-      <View style={styles.rowcontainer}>
-        <TouchableOpacityButton
-          text="3"
-          onPress={() => updateCalculation('3')}
-        />
-        <TouchableOpacityButton
-          text="4"
-          onPress={() => updateCalculation('4')}
-        />
-        <TouchableOpacityButton
-          text="5"
-          onPress={() => updateCalculation('5')}
-        />
-      </View>
-      <View style={styles.rowcontainer}>
-        <TouchableOpacityButton
-          text="6"
-          onPress={() => updateCalculation('6')}
-        />
-        <TouchableOpacityButton
-          text="7"
-          onPress={() => updateCalculation('7')}
-        />
-        <TouchableOpacityButton
-          text="8"
-          onPress={() => updateCalculation('8')}
-        />
-      </View>
-      <View style={styles.rowcontainer}>
-        <TouchableOpacityButton
-          text="9"
-          onPress={() => updateCalculation('9')}
-        />
-        <TouchableOpacityButton
-          text="."
-          onPress={() => updateCalculation('.')}
-        />
-        <TouchableOpacityButton
-          text="Del"
-          onPress={() => updateCalculation('del')}
-        />
-      </View>
-      <View style={styles.rowcontainer}>
-        <TouchableOpacityButton
-          text="="
-          onPress={() => updateCalculation('=')}
-        />
-        <TouchableOpacityButton
-          text="Clear"
-          onPress={() => updateCalculation('clear')}
-        />
-      </View>
+      {/* Loop through each row of buttons */}
+      {buttonRows.map((row, rowIndex) => (
+        <View style={styles.rowcontainer} key={rowIndex}>
+          {/* Loop through each button in the row */}
+          {row.map((btnText) => (
+            <TouchableOpacityButton
+              key={btnText}
+              text={btnText}
+              // When a button is pressed, call updateCalculation with the right value
+              // If 'Del' is pressed, send 'del'
+              // If 'Clear' is pressed, send 'clear'
+              // Otherwise, send the button text (number or symbol)
+              onPress={() =>
+                updateCalculation(
+                  btnText === "Del"
+                    ? "del"
+                    : btnText === "Clear"
+                    ? "clear"
+                    : btnText
+                )
+              }
+            />
+          ))}
+        </View>
+      ))}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   rowcontainer: {
-    flexDirection: 'row',
-    alignContent: 'flex-start',
-    flexWrap: 'wrap',
+    flexDirection: "row", // Arrange buttons in a row
+    alignContent: "flex-start",
+    flexWrap: "wrap", // Allow wrapping if needed
   },
 });
